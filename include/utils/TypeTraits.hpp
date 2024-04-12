@@ -94,7 +94,46 @@ namespace Desk
     };
 
     template <typename T>
-    constexpr bool IsComplete_v = IsComplete<T>::value
+    constexpr bool IsComplete_v = IsComplete<T>::value;
+
+    template <typename... Ts>
+    struct Overloaded : Ts...
+    {
+        using Ts::operator()...;
+    };
+
+    template <typename... Ts>
+    Overloaded(Ts...) -> Overloaded<Ts...>;
+
+    template <typename T>
+    struct PointedType
+    {
+        static_assert(AlwaysFalse<T>(), "not a pointer");
+    }
+
+    template <typename T>
+    struct PointedType<T *>
+    {
+        using type = T;
+    };
+    template <typename T>
+    struct PointedType<T *const>
+    {
+        using type = T;
+    };
+    template <typename T>
+    struct PointedType<T *volatile>
+    {
+        using type = T;
+    };
+    template <typename T>
+    struct PointedType<T *const volatile>
+    {
+        using type = T;
+    };
+
+    template <typename T>
+    using Pointer = T *;
 } // namespace Desk
 
 #endif
