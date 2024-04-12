@@ -59,6 +59,20 @@ namespace Desk
     template <typename E>
     constexpr std::size_t EnumValueCount_v = EnumValueCount<E>::value;
 
-}
+    namespace Detail
+    {
+        template <typename T>
+        struct FunctionPtrType;
+
+        template <typename Ret, typename... Args>
+        struct FunctionPtrType<Ret(Args...)>
+        {
+            using type = Ret (*)(Args...);
+        };
+    } // namespace Detail
+
+    template <typename T>
+    using FunctionPtr = typename Detail::FunctionPtrType<T>::type;
+} // namespace Desk
 
 #endif
