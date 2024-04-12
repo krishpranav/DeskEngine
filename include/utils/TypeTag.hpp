@@ -11,8 +11,8 @@
 
 #pragma once
 
-#ifndef DESK_TYPETRAITS_HPP
-#define DESK_TYPETRAITS_HPP
+#ifndef DESK_TYPETAG_HPP
+#define DESK_TYPETAG_HPP
 
 namespace Desk
 {
