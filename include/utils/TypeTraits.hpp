@@ -48,6 +48,17 @@ namespace Desk
         static constexpr std::size_t value = static_cast<std::size_t>(E::Count);
     };
 
+    template <typename E>
+    struct EnumValueCount<E, LazyVoid_t<decltype(E::Max)>>
+    {
+        static_assert(std::is_enum_v<E>, "Type must be an enumeration");
+
+        static constexpr std::size_t value = static_cast<std::size_t>(E::Max) + 1;
+    };
+
+    template <typename E>
+    constexpr std::size_t EnumValueCount_v = EnumValueCount<E>::value;
+
 }
 
 #endif
