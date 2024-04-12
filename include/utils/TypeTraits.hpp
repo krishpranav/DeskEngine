@@ -73,6 +73,28 @@ namespace Desk
 
     template <typename T>
     using FunctionPtr = typename Detail::FunctionPtrType<T>::type;
+
+    namespace Detail
+    {
+        template <typename T>
+        struct IsCompleteHelper
+        {
+            template <typename U>
+            static auto test(U *) -> std::bool_constant<sizeof(U) == sizeof(U)>;
+
+            static auto test(...) -> std::false_type;
+
+            using type = decltype(test(static_cast<T *>(nullptr)));
+        };
+    } // namespace Detail
+
+    template <typename T>
+    struct IsComplete : Detail::IsCompleteHelper<T>::type
+    {
+    };
+
+    template <typename T>
+    constexpr bool IsComplete_v = IsComplete<T>::value
 } // namespace Desk
 
 #endif
