@@ -22,6 +22,12 @@
 namespace Desk
 {
 
+    template <typename F>
+    class CallOnExit
+    {
+
+    }; // class CallOnExit
+
 } // namespace Desk
 
 #endif
